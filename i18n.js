@@ -31,6 +31,7 @@ const I18N = {
     purged: 'Archived items were put away.',
     confirmPurge: 'Purge all archived items?',
     confirmDelete: 'Delete this item?',
+    readView: 'Read', readMarkRead: 'Mark as read', readBack: 'Back to the stack', readSize: 'Size', readMiss: 'This item is not in the stack anymore.',
     credit: 'Built by Harley Vásquez',
   },
   es: {
@@ -65,6 +66,7 @@ const I18N = {
     purged: 'Los elementos archivados fueron apartados.',
     confirmPurge: '¿Ordenar todos los elementos archivados?',
     confirmDelete: '¿Eliminar este elemento?',
+    readView: 'Leer', readMarkRead: 'Marcar como leído', readBack: 'Volver a la pila', readSize: 'Tamaño', readMiss: 'Este artículo ya no está en la pila.',
     credit: 'Creado por Harley Vásquez',
   },
   fr: {
@@ -99,6 +101,7 @@ const I18N = {
     purged: 'Les éléments archivés ont été rangés.',
     confirmPurge: 'Ranger tous les éléments archivés ?',
     confirmDelete: 'Supprimer cet élément ?',
+    readView: 'Lire', readMarkRead: 'Marquer comme lu', readBack: 'Retour à la pile', readSize: 'Taille', readMiss: 'Cet article n’est plus dans la pile.',
     credit: 'Créé par Harley Vásquez',
   },
   pt: {
@@ -133,6 +136,7 @@ const I18N = {
     purged: 'Itens arquivados foram guardados.',
     confirmPurge: 'Organizar todos os itens arquivados?',
     confirmDelete: 'Excluir este item?',
+    readView: 'Ler', readMarkRead: 'Marcar como lido', readBack: 'Voltar à pilha', readSize: 'Tamanho', readMiss: 'Este item não está mais na pilha.',
     credit: 'Criado por Harley Vásquez',
   },
   it: {
@@ -167,6 +171,7 @@ const I18N = {
     purged: 'Gli elementi archiviati sono stati messi via.',
     confirmPurge: 'Sistemare tutti gli elementi archiviati?',
     confirmDelete: 'Eliminare questo elemento?',
+    readView: 'Leggi', readMarkRead: 'Segna come letto', readBack: 'Torna alla pila', readSize: 'Dimensione', readMiss: 'Questo elemento non è più nella pila.',
     credit: 'Creato da Harley Vásquez',
   },
   de: {
@@ -201,6 +206,7 @@ const I18N = {
     purged: 'Archivierte Elemente wurden weggeräumt.',
     confirmPurge: 'Alle archivierten Elemente aufräumen?',
     confirmDelete: 'Dieses Element löschen?',
+    readView: 'Lesen', readMarkRead: 'Als gelesen markieren', readBack: 'Zurück zum Stapel', readSize: 'Größe', readMiss: 'Dieser Eintrag ist nicht mehr im Stapel.',
     credit: 'Erstellt von Harley Vásquez',
   },
 };

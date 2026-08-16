@@ -30,6 +30,16 @@ No `host_permissions`: no site ever gets persistent access.
 3. Click "Load unpacked" and select the folder.
 4. Open the popup on the page you want to keep and click "Add this tab".
 
+## Verify (headless probe)
+
+Clone the repo, then:
+
+```bash
+npm install
+npm run zip    # dist/readstack.zip + landing copy (byte-identical)
+npm run probe  # hermetic end-to-end probe against a headless Chrome (extension + landing)
+```
+
 ---
 
 # ReadStack — apila lo que lees
@@ -63,6 +73,16 @@ Sin `host_permissions`: ningún sitio obtiene jamás acceso persistente.
 2. Abre `chrome://extensions` y activa el modo desarrollador.
 3. Haz clic en "Cargar descomprimida" y elige la carpeta.
 4. Abre el popup en la página que quieras conservar y pulsa "Añadir esta pestaña".
+
+## Verificación (probe headless)
+
+Clona el repo y ejecuta:
+
+```bash
+npm install
+npm run zip    # dist/readstack.zip + copia en landing (byte-idénticos)
+npm run probe  # probe hermético end-to-end contra un Chrome headless (extensión + landing)
+```
 
 ## Credit / Créditos
 

@@ -293,6 +293,61 @@ try {
   const stackNow = await popup.evaluate(() => window.__rsStack());
   check('export: JSON has all stack items', Array.isArray(parsed.items) && parsed.items.length === stackNow.length && parsed.total === stackNow.length, 'total=' + (parsed && parsed.total));
 
+  // ---------- READING MODE ----------
+  const rid = await popup.evaluate(() => window.__rsSave({ title: 'Reading test', url: 'http://example.com/r1', text: 'The weekend market opens at dawn with paper bags of cinnamon and quiet mornings.', source: 'title' }));
+  const readUrl = `chrome-extension://${entry.id}/read.html?q=${encodeURIComponent(rid.id)}`;
+  const readPg = await browser.newPage();
+  readPg.on('pageerror', (er) => console.error('READPAGE-ERROR: ' + er.message));
+  await readPg.goto(readUrl, { waitUntil: 'domcontentloaded' });
+  try {
+    await readPg.waitForFunction(() => document.querySelector('.rTitle').textContent !== '' || document.body.classList.contains('miss'), { timeout: 8000, polling: 100 });
+  } catch (wtfe) {
+    const dump = await readPg.evaluate(() => ({ html: document.body.innerHTML.slice(0, 600), cls: document.body.className, scripts: Array.from(document.scripts).map((s) => s.src) }));
+    console.error('READPAGE-WAIT-TIMEOUT: ' + JSON.stringify(dump));
+    throw wtfe;
+  }
+  await sleep(200);
+  const readOk = await readPg.evaluate(() => {
+    const t = document.querySelector('.rText');
+    const cs = getComputedStyle(t);
+    return { text: t.textContent, serif: cs.fontFamily.includes('serif'), lh: parseFloat(cs.lineHeight) };
+  });
+  check('reading mode: saved text rendered (not live DOM)', readOk.text.includes('quiet mornings'), readOk.text.slice(0, 60));
+  check('reading mode: own reading typography (serif, line-height >= 1.6)', readOk.serif === true && readOk.lh >= 1.6, `serif=${readOk.serif} lh=${readOk.lh}`);
+  const fs0 = await readPg.evaluate(() => parseFloat(getComputedStyle(document.querySelector('.rText')).fontSize));
+  await readPg.evaluate(() => document.getElementById('sizeUp').click());
+  await sleep(250);
+  const fs1 = await readPg.evaluate(() => parseFloat(getComputedStyle(document.querySelector('.rText')).fontSize));
+  const savedReadSize = await readPg.evaluate(async () => (await chrome.storage.local.get('rs:readSize'))['rs:readSize']);
+  check('reading mode: size control grows the type and persists', fs1 > fs0 && savedReadSize === fs1, `fs0=${fs0} fs1=${fs1} saved=${savedReadSize}`);
+  await readPg.evaluate(() => document.getElementById('markReadBtn').click());
+  await sleep(350);
+  const readFlag = await popup.evaluate(async (id) => ((await window.__rsStack()).find((i) => i.id === id) || {}).read === true, rid.id);
+  check('reading mode: mark-as-read lands on the stack item', readFlag === true, '');
+  await popup.evaluate(() => chrome.storage.local.set({ 'rs:readSize': 17 }));
+  await readPg.close();
+  const missPg = await browser.newPage();
+  await missPg.goto(`chrome-extension://${entry.id}/read.html?q=nope`, { waitUntil: 'domcontentloaded' });
+  await missPg.waitForFunction(() => document.body.classList.contains('miss'), { timeout: 8000, polling: 100 });
+  check('reading mode: unknown id shows the honest miss state', (await missPg.evaluate(() => document.getElementById('miss').textContent)) === 'This item is not in the stack anymore.', '');
+  await missPg.close();
+  const tabsBeforeR = await popup.evaluate(async () => (await chrome.tabs.query({})).length);
+  const readUrlForRow = await popup.evaluate(() => window.__rsReadUrl(document.querySelectorAll('.item')[0].dataset.id));
+  await popup.evaluate(async (u) => chrome.tabs.create({ url: u, active: false }), readUrlForRow);
+  await sleep(600);
+  const tabsAfterR = await popup.evaluate(async () => (await chrome.tabs.query({})).length);
+  const readTabExists = await popup.evaluate(async () => (await chrome.tabs.query({})).some((t) => t.url && t.url.includes('read.html?q=')));
+  check('popup: Read button opens the reading view in a tab', tabsAfterR === tabsBeforeR + 1 && readTabExists === true, `before=${tabsBeforeR} after=${tabsAfterR}`);
+  await popup.evaluate(() => chrome.storage.local.remove('rs:readSize'));
+  await popup.evaluate(() => chrome.storage.local.set({ 'rs:lang': 'es' }));
+  await popup.goto(popupUrl, { waitUntil: 'domcontentloaded' });
+  await popup.waitForFunction(() => document.querySelector('[data-i18n="tagline"]')?.textContent !== '', { timeout: 8000, polling: 100 });
+  const esReadLabel = await popup.evaluate(() => document.querySelectorAll('.item')[0].querySelectorAll('.mini')[3].textContent);
+  check('reading mode: read button label localized (es)', esReadLabel === 'Leer', esReadLabel);
+  await popup.evaluate(() => chrome.storage.local.set({ 'rs:lang': 'en' }));
+  await popup.goto(popupUrl, { waitUntil: 'domcontentloaded' });
+  await popup.waitForFunction(() => document.querySelector('[data-i18n="tagline"]')?.textContent !== '', { timeout: 8000, polling: 100 });
+
   // ---------- i18n popup ----------
   const langCheck = async (code) => {
     await popup.select('#langSel', code);

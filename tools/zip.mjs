@@ -11,6 +11,9 @@ const FILES = [
   'popup.html',
   'popup.css',
   'popup.js',
+  'read.html',
+  'read.css',
+  'read.js',
   'icons',
   'README.md',
 ];

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ReadStack</title>
+<link rel="stylesheet" href="read.css">
+</head>
+<body class="readview">
+<div class="rtoolbar">
+  <button id="backBtn" data-i18n="readBack">Back to the stack</button>
+  <span class="rtool title" data-i18n="readView">Read</span>
+  <span class="rtool size">
+    <span data-i18n="readSize">Size</span>
+    <button id="sizeDown" aria-label="Smaller">A−</button>
+    <button id="sizeUp" aria-label="Bigger">A+</button>
+  </span>
+  <button id="markReadBtn" class="primary" data-i18n="readMarkRead">Mark as read</button>
+</div>
+<main class="rwrap">
+  <article class="rarticle">
+    <h1 id="rTitle" class="rTitle"></h1>
+    <p id="rMeta" class="rMeta"></p>
+    <div id="rText" class="rText"></div>
+  </article>
+  <div id="miss" class="rmiss" hidden></div>
+</main>
+<button id="goTop" class="gotop" aria-label="Top">↑</button>
+<script src="i18n.js"></script>
+<script src="read.js"></script>
+</body>
+</html>

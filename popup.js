@@ -218,6 +218,10 @@ async function render() {
     openB.className = 'mini';
     openB.textContent = L('open');
     openB.addEventListener('click', () => openItem(item.id));
+    const readView = document.createElement('button');
+    readView.className = 'mini';
+    readView.textContent = L('readView');
+    readView.addEventListener('click', () => openReadView(item.id));
     const del = document.createElement('button');
     del.className = 'mini del';
     del.textContent = L('delete');
@@ -225,6 +229,7 @@ async function render() {
     acts.appendChild(toggleRead);
     acts.appendChild(toggleArc);
     acts.appendChild(openB);
+    acts.appendChild(readView);
     acts.appendChild(del);
     row.appendChild(acts);
 
@@ -247,6 +252,10 @@ async function toggleItemArchive(id) {
 async function openItem(id) {
   const item = stack.find((i) => i.id === id);
   if (item && item.url) await chrome.tabs.create({ url: item.url, active: false });
+}
+
+async function openReadView(id) {
+  await chrome.tabs.create({ url: chrome.runtime.getURL('read.html?q=' + encodeURIComponent(id)), active: false });
 }
 
 async function deleteItem(id) {
@@ -292,6 +301,10 @@ window.__rsAdd = async () => {
 };
 window.__rsOpen = async (id) => {
   await openItem(id);
+};
+window.__rsReadUrl = (id) => chrome.runtime.getURL('read.html?q=' + encodeURIComponent(id));
+window.__rsReadOpen = async (id) => {
+  await openReadView(id);
 };
 window.__rsExport = async () => JSON.stringify({ exportedAt: Date.now(), items: stack, total: stack.length });
 window.__rsPurgeArchived = async () => {
