@@ -1,8 +1,8 @@
-# ReadStack — stack what you read
+﻿# ReadStack — stack what you read
 
 Save the page you are reading and its readable text into a private stack that lives only in your Chrome: read/unread marks, search, archive and a JSON export you own. Page text is captured only when you press the button — no host permissions, no background tracking.
 
-Landing page: `https://readstack.vercel.app`
+Landing page: `https://readstack-flax.vercel.app`
 
 ## What it does
 
@@ -25,7 +25,7 @@ No `host_permissions`: no site ever gets persistent access.
 
 ## Install
 
-1. Download `readstack.zip` (`https://readstack.vercel.app/readstack.zip`) and unpack it somewhere permanent.
+1. Download `readstack.zip` (`https://readstack-flax.vercel.app/readstack.zip`) and unpack it somewhere permanent.
 2. Open `chrome://extensions` and enable Developer mode.
 3. Click "Load unpacked" and select the folder.
 4. Open the popup on the page you want to keep and click "Add this tab".
@@ -36,7 +36,7 @@ No `host_permissions`: no site ever gets persistent access.
 
 Guarda la página que estás leyendo y su texto legible en una pila privada que vive solo en tu Chrome: marcas de leído/no leído, búsqueda, archivo y una exportación JSON que te pertenece. El texto de la página solo se captura cuando pulsas el botón — sin permisos de host, sin seguimiento en segundo plano.
 
-Página de aterrizaje: `https://readstack.vercel.app`
+Página de aterrizaje: `https://readstack-flax.vercel.app`
 
 ## Qué hace
 
@@ -59,7 +59,7 @@ Sin `host_permissions`: ningún sitio obtiene jamás acceso persistente.
 
 ## Instalación
 
-1. Descarga `readstack.zip` (`https://readstack.vercel.app/readstack.zip`) y descomprímelo en un lugar permanente.
+1. Descarga `readstack.zip` (`https://readstack-flax.vercel.app/readstack.zip`) y descomprímelo en un lugar permanente.
 2. Abre `chrome://extensions` y activa el modo desarrollador.
 3. Haz clic en "Cargar descomprimida" y elige la carpeta.
 4. Abre el popup en la página que quieras conservar y pulsa "Añadir esta pestaña".
