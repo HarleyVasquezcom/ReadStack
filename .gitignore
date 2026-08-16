@@ -1,0 +1,7 @@
+node_modules/
+_metadata/
+.vercel/
+.vscode/
+Thumbs.db
+.env*
+.vercel

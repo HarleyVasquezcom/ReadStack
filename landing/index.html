@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ReadStack — stack what you read</title>
+<style>
+  :root {
+    --teal: #0f766e;
+    --teal2: #14b8a6;
+    --mint: #ccfbf1;
+    --bg: #f6f7f2;
+    --card: #ffffff;
+    --text: #1f2a28;
+    --muted: #5c6b67;
+    --line: #e2e6dd;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    padding: 48px 20px 40px;
+    overflow-x: hidden;
+  }
+  .wrap { max-width: 760px; width: 100%; }
+  .topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; }
+  .logo { display: flex; align-items: center; gap: 10px; font-weight: 700; color: var(--teal); font-size: 18px; }
+  .stacklogo {
+    width: 34px; height: 34px; flex: none; position: relative;
+    background: var(--teal); border-radius: 9px;
+  }
+  .stacklogo::before {
+    content: ''; position: absolute; left: 8px; right: 8px; top: 10px; bottom: 7px;
+    background: #fff; border-radius: 2px; transform: rotate(-3deg);
+  }
+  .stacklogo::after {
+    content: ''; position: absolute; left: 11px; right: 11px; top: 15px; bottom: 10px;
+    background: repeating-linear-gradient(var(--teal) 0 2px, #fff 2px 5px);
+    border-radius: 1px;
+  }
+  select { background: var(--mint); color: var(--teal); border: 1px solid var(--teal2); border-radius: 8px; padding: 5px 8px; }
+  .hero { text-align: center; margin-bottom: 44px; }
+  .hero h1 { font-size: 44px; color: var(--teal); letter-spacing: 1px; }
+  .hero p.tag { color: var(--muted); font-size: 17px; margin-top: 8px; }
+  .sky { position: relative; height: 120px; margin: 22px 0 30px; }
+  .stack {
+    position: absolute; left: 50%; top: 12px; width: 84px; height: 84px; margin-left: -42px;
+    background: var(--teal); border-radius: 20px;
+    box-shadow: 0 0 60px rgba(20, 184, 166, 0.35);
+    animation: bob 5s ease-in-out infinite;
+  }
+  .stack::before {
+    content: ''; position: absolute; left: 15px; right: 15px; top: 22px; bottom: 15px;
+    background: #fff; border-radius: 4px; transform: rotate(-3deg);
+  }
+  .stack::after {
+    content: ''; position: absolute; left: 22px; right: 22px; top: 32px; bottom: 22px;
+    background: repeating-linear-gradient(var(--teal2) 0 3px, #fff 3px 8px);
+    border-radius: 2px;
+  }
+  @keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-9px); } }
+  .hero p.honest { color: var(--muted); font-size: 13.5px; line-height: 1.65; max-width: 620px; margin: 0 auto; }
+  .cta {
+    display: inline-block; margin-top: 28px; background: linear-gradient(135deg, var(--teal), var(--teal2));
+    color: #fff; font-weight: 700; padding: 12px 26px; border-radius: 999px; text-decoration: none; font-size: 15px;
+  }
+  .cta:hover { filter: brightness(1.1); }
+  .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 46px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 18px; }
+  .card h3 { color: var(--teal); font-size: 15px; margin-bottom: 8px; }
+  .card li { margin-left: 18px; color: var(--muted); font-size: 13px; line-height: 1.6; }
+  .perms { margin-top: 16px; }
+  .permnote { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; margin-top: 16px; font-size: 12.5px; color: var(--muted); line-height: 1.7; }
+  footer { margin-top: 44px; text-align: center; font-size: 12px; color: var(--muted); }
+  footer a { color: var(--teal2); text-decoration: none; }
+  @media (max-width: 560px) { .cards { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar">
+    <div class="logo"><span class="stacklogo" aria-hidden="true"></span><span data-i18n="brand">ReadStack</span></div>
+    <select id="langSel" data-i18n-lang aria-label="Language">
+      <option value="en">EN</option>
+      <option value="es">ES</option>
+      <option value="fr">FR</option>
+      <option value="pt">PT</option>
+      <option value="it">IT</option>
+      <option value="de">DE</option>
+    </select>
+  </div>
+
+  <section class="hero">
+    <h1 data-i18n="heroTitle">ReadStack</h1>
+    <p class="tag" data-i18n="tagline">stack what you read</p>
+    <div class="sky" aria-hidden="true"><div class="stack"></div></div>
+    <p class="honest" data-i18n="honest">Save the page you are reading and its readable text into a private stack in Chrome. The stack stays in your browser: read/unread marks, search, archive, and a JSON export you own. Page text is only captured when you press the button.</p>
+    <a class="cta" href="readstack.zip" download data-i18n="dl">Download ZIP</a>
+  </section>
+
+  <section class="cards">
+    <div class="card">
+      <h3 data-i18n="how">What it does</h3>
+      <ul>
+        <li data-i18n="h1">One click adds the current page — title, URL and the readable text it can read — to your stack, stored privately in chrome.storage.</li>
+        <li data-i18n="h2">Every item carries an unread/read state; filters for All, Unread and Archived, plus live search across titles, URLs and text.</li>
+        <li data-i18n="h3">Archive keeps finished items out of the way without deleting them; "Tidy archive" clears the archived stack when you are done.</li>
+        <li data-i18n="h4">Export JSON dumps your whole stack to a file you own and can import anywhere.</li>
+        <li data-i18n="h5">The stack stays capped at 200 items so chrome.storage stays light; the oldest read items are pruned first, archived items are protected.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3 data-i18n="perm">Permissions — minimal and used</h3>
+      <ul>
+        <li data-i18n="p1">storage — your stack and language live only in chrome.storage.local.</li>
+        <li data-i18n="p2">tabs + activeTab + scripting — reading page text only for the tab you clicked on: tries a plain fetch first, and only when that fails uses Chrome's read-the-active-tab API.</li>
+        <li data-i18n="p3">No host permissions: no site ever gets persistent access to this extension.</li>
+      </ul>
+      <div class="permnote" data-i18n="note"><b>Honest note:</b> page text is captured at the moment you click the button, not continuously. When a page cannot be read (some sites block reading), ReadStack saves the title and URL only, so nothing is lost.</div>
+    </div>
+  </section>
+
+  <section class="card perms">
+    <h3 data-i18n="install">Install</h3>
+    <ul>
+      <li data-i18n="i1">Download readstack.zip and unpack it somewhere permanent.</li>
+      <li data-i18n="i2">Open chrome://extensions and enable Developer mode.</li>
+      <li data-i18n="i3">Click "Load unpacked" and pick the folder (keep the folder after loading).</li>
+      <li data-i18n="i4">Open the popup on any page you want to keep and click "Add this tab".</li>
+    </ul>
+  </section>
+
+  <footer><a data-i18n="credit" href="https://www.linkedin.com/in/harleyvasquez/" target="_blank" rel="noreferrer">Built by Harley Vásquez</a></footer>
+</div>
+
+<script>
+  const I18N = {
+    en: { brand: 'ReadStack', heroTitle: 'ReadStack', tagline: 'stack what you read', honest: 'Save the page you are reading and its readable text into a private stack in Chrome. The stack stays in your browser: read/unread marks, search, archive, and a JSON export you own. Page text is only captured when you press the button.', dl: 'Download ZIP', how: 'What it does', h1: 'One click adds the current page — title, URL and the readable text it can read — to your stack, stored privately in chrome.storage.', h2: 'Every item carries an unread/read state; filters for All, Unread and Archived, plus live search across titles, URLs and text.', h3: 'Archive keeps finished items out of the way without deleting them; "Tidy archive" clears the archived stack when you are done.', h4: 'Export JSON dumps your whole stack to a file you own and can import anywhere.', h5: 'The stack stays capped at 200 items so chrome.storage stays light; the oldest read items are pruned first, archived items are protected.', perm: 'Permissions — minimal and used', p1: 'storage — your stack and language live only in chrome.storage.local.', p2: 'tabs + activeTab + scripting — reading page text only for the tab you clicked on: tries a plain fetch first, and only when that fails uses Chrome\'s read-the-active-tab API.', p3: 'No host permissions: no site ever gets persistent access to this extension.', note: '<b>Honest note:</b> page text is captured at the moment you click the button, not continuously. When a page cannot be read (some sites block reading), ReadStack saves the title and URL only, so nothing is lost.', install: 'Install', i1: 'Download readstack.zip and unpack it somewhere permanent.', i2: 'Open chrome://extensions and enable Developer mode.', i3: 'Click "Load unpacked" and pick the folder (keep the folder after loading).', i4: 'Open the popup on any page you want to keep and click "Add this tab".', credit: 'Built by Harley Vásquez' },
+    es: { brand: 'ReadStack', heroTitle: 'ReadStack', tagline: 'apila lo que lees', honest: 'Guarda la página que estás leyendo y su texto legible en una pila privada dentro de Chrome. La pila vive en tu navegador: marcas de leído/no leído, búsqueda, archivo y una exportación JSON que te pertenece. El texto de la página solo se captura cuando pulsas el botón.', dl: 'Descargar ZIP', how: 'Qué hace', h1: 'Un clic añade la página actual — título, URL y el texto legible que pueda leer — a tu pila, guardada de forma privada en chrome.storage.', h2: 'Cada elemento lleva estado no leído/leído; filtros para Todo, No leído y Archivado, más búsqueda en vivo por títulos, URLs y texto.', h3: 'Archivar aparta los elementos terminados sin borrarlos; "Ordenar archivo" limpia la pila archivada cuando termines.', h4: 'Exportar JSON vuelca toda tu pila a un archivo tuyo que puedes importar en cualquier lado.', h5: 'La pila se mantiene limitada a 200 elementos para que chrome.storage siga liviano; se podan primero los más antiguos ya leídos y los archivados están protegidos.', perm: 'Permisos — mínimos y usados', p1: 'storage — tu pila y tu idioma viven solo en chrome.storage.local.', p2: 'tabs + activeTab + scripting — leer el texto de la página solo para la pestaña en la que hiciste clic: primero intenta un fetch simple, y solo si falla usa la API de lectura de la pestaña activa de Chrome.', p3: 'Sin permisos de host: ningún sitio obtiene jamás acceso persistente a esta extensión.', note: '<b>Nota honesta:</b> el texto de la página se captura en el momento en que pulsas el botón, no continuamente. Cuando una página no se deja leer (algunos sitios lo bloquean), ReadStack guarda solo el título y la URL, así no pierdes nada.', install: 'Instalación', i1: 'Descarga readstack.zip y descomprímelo en un lugar permanente.', i2: 'Abre chrome://extensions y activa el modo desarrollador.', i3: 'Haz clic en "Cargar descomprimida" y elige la carpeta (consérvala).', i4: 'Abre el popup en cualquier página que quieras conservar y pulsa "Añadir esta pestaña".', credit: 'Creado por Harley Vásquez' },
+    fr: { brand: 'ReadStack', heroTitle: 'ReadStack', tagline: 'empilez ce que vous lisez', honest: 'Enregistrez la page que vous lisez et son texte lisible dans une pile privée dans Chrome. La pile vit dans votre navigateur : marques lu/non lu, recherche, archive et une exportation JSON qui vous appartient. Le texte d’une page n’est capturé que lorsque vous appuyez sur le bouton.', dl: 'Télécharger le ZIP', how: 'Ce qu’il fait', h1: 'Un clic ajoute la page actuelle — titre, URL et le texte lisible qu’elle contient — à votre pile, stockée en privé dans chrome.storage.', h2: 'Chaque élément porte un état non lu/lu ; filtres Tout, Non lu et Archivé, plus recherche en direct sur titres, URL et texte.', h3: 'Archiver range les éléments terminés sans les supprimer ; « Ranger l’archive » vide la pile archivée quand vous avez fini.', h4: 'Exporter en JSON déverse toute votre pile dans un fichier qui vous appartient, importable partout.', h5: 'La pile reste plafonnée à 200 éléments pour que chrome.storage reste léger ; les plus anciens éléments lus sont élagués en premier, les archivés sont protégés.', perm: 'Permissions — minimales et utilisées', p1: 'storage — votre pile et votre langue vivent uniquement dans chrome.storage.local.', p2: 'tabs + activeTab + scripting — pour lire le texte de la page uniquement sur l’onglet cliqué : essaie d’abord un simple fetch, et seulement s’il échoue utilise l’API de lecture de l’onglet actif de Chrome.', p3: 'Aucune permission d’hôte : aucun site n’obtient jamais d’accès persistant à cette extension.', note: '<b>Note honnête :</b> le texte de la page est capturé au moment où vous appuyez sur le bouton, pas en continu. Quand une page refuse d’être lue, ReadStack enregistre uniquement le titre et l’URL : rien n’est perdu.', install: 'Installation', i1: 'Téléchargez readstack.zip et décompressez-le dans un emplacement permanent.', i2: 'Ouvrez chrome://extensions et activez le mode développeur.', i3: 'Cliquez sur « Charger l’extension non empaquetée » et choisissez le dossier (conservez-le).', i4: 'Ouvrez le popup sur n’importe quelle page à conserver et cliquez sur « Ajouter cet onglet ».', credit: 'Créé par Harley Vásquez' },
+    pt: { brand: 'ReadStack', heroTitle: 'ReadStack', tagline: 'empilhe o que você lê', honest: 'Salve a página que você está lendo e o texto legível dela em uma pilha privada no Chrome. A pilha vive no seu navegador: marcas de lido/não lido, busca, arquivo e uma exportação JSON sua. O texto da página só é capturado quando você aperta o botão.', dl: 'Baixar ZIP', how: 'O que faz', h1: 'Um clique adiciona a página atual — título, URL e o texto legível que conseguir ler — à sua pilha, guardada em privado no chrome.storage.', h2: 'Cada item tem estado não lido/lido; filtros para Tudo, Não lido e Arquivado, além de busca em tempo real por títulos, URLs e texto.', h3: 'Arquivar guarda os itens terminados sem apagá-los; "Organizar arquivo" limpa a pilha arquivada quando você terminar.', h4: 'Exportar JSON despeja sua pilha inteira em um arquivo seu, importável em qualquer lugar.', h5: 'A pilha fica limitada a 200 itens para o chrome.storage continuar leve; os itens lidos mais antigos são podados primeiro, e os arquivados ficam protegidos.', perm: 'Permissões — mínimas e usadas', p1: 'storage — sua pilha e seu idioma vivem só no chrome.storage.local.', p2: 'tabs + activeTab + scripting — ler o texto da página só na guia em que você clicou: primeiro tenta um fetch simples, e apenas se falhar usa a API de leitura da guia ativa do Chrome.', p3: 'Sem permissões de host: nenhum site ganha acesso persistente a esta extensão.', note: '<b>Nota honesta:</b> o texto da página é capturado no momento em que você aperta o botão, não continuamente. Quando uma página não se deixa ler, o ReadStack salva só o título e a URL — nada se perde.', install: 'Instalação', i1: 'Baixe o readstack.zip e descompacte em um lugar permanente.', i2: 'Abra chrome://extensions e ative o modo desenvolvedor.', i3: 'Clique em "Carregar sem compactação" e escolha a pasta (mantenha-a).', i4: 'Abra o popup em qualquer página que queira guardar e clique em "Adicionar esta guia".', credit: 'Criado por Harley Vásquez' },
+    it: { brand: 'ReadStack', heroTitle: 'ReadStack', tagline: 'accatasta ciò che leggi', honest: 'Salva la pagina che stai leggendo e il suo testo leggibile in una pila privata in Chrome. La pila vive nel tuo browser: segni letto/non letto, ricerca, archivio e un’esportazione JSON che ti appartiene. Il testo della pagina viene catturato solo quando premi il pulsante.', dl: 'Scarica ZIP', how: 'Cosa fa', h1: 'Un clic aggiunge la pagina corrente — titolo, URL e il testo leggibile che riesce a leggere — alla tua pila, conservata in privato in chrome.storage.', h2: 'Ogni elemento ha uno stato non letto/letto; filtri per Tutto, Non letto e Archiviato, più ricerca in tempo reale su titoli, URL e testo.', h3: 'Archiviare mette da parte gli elementi finiti senza cancellarli; "Sistema l’archivio" svuota la pila archiviata quando hai finito.', h4: 'Esporta JSON riversa l’intera pila in un file tuo, importabile ovunque.', h5: 'La pila resta al massimo di 200 elementi perché chrome.storage resti leggero; i più vecchi già letti vengono potati per primi, gli archiviati sono protetti.', perm: 'Permessi — minimi e usati', p1: 'storage — la tua pila e la tua lingua vivono solo in chrome.storage.local.', p2: 'tabs + activeTab + scripting — leggere il testo della pagina solo nella scheda su cui hai cliccato: prova prima un semplice fetch e, solo se fallisce, usa l’API di lettura della scheda attiva di Chrome.', p3: 'Nessun permesso host: nessun sito ottiene mai accesso persistente a questa estensione.', note: '<b>Nota onesta:</b> il testo della pagina viene catturato nell’istante in cui premi il pulsante, non in continuo. Quando una pagina non si lascia leggere, ReadStack salva solo titolo e URL: non perdi nulla.', install: 'Installazione', i1: 'Scarica readstack.zip e decomprimilo in un posto permanente.', i2: 'Apri chrome://extensions e attiva la modalità sviluppatore.', i3: 'Clicca su "Carica estensione non pacchettizzata" e scegli la cartella (conservala).', i4: 'Apri il popup su una pagina da conservare e clicca su "Aggiungi questa scheda".', credit: 'Creato da Harley Vásquez' },
+    de: { brand: 'ReadStack', heroTitle: 'ReadStack', tagline: 'staple, was du liest', honest: 'Speichere die Seite, die du liest, samt lesbarem Text in einem privaten Stapel in Chrome. Der Stapel lebt in deinem Browser: gelesen/ungelesen-Markierungen, Suche, Archiv und ein JSON-Export, der dir gehört. Der Seitentext wird nur erfasst, wenn du den Knopf drückst.', dl: 'ZIP herunterladen', how: 'Was es tut', h1: 'Ein Klick fügt die aktuelle Seite — Titel, URL und den lesbaren Text, den sie hergibt — deinem Stapel hinzu, privat in chrome.storage.', h2: 'Jedes Element hat einen ungelesen/gelesen-Status; Filter für Alle, Ungelesen und Archiviert, plus Live-Suche über Titel, URLs und Text.', h3: 'Archivieren räumt erledigte Elemente weg, ohne sie zu löschen; „Archiv aufräumen" leert den archivierten Stapel, wenn du fertig bist.', h4: 'JSON-Export schreibt deinen gesamten Stapel in eine Datei, die dir gehört und überall importierbar ist.', h5: 'Der Stapel bleibt auf 200 Elemente begrenzt, damit chrome.storage leicht bleibt; zuerst werden die ältesten gelesenen entfernt, Archiviertes ist geschützt.', perm: 'Berechtigungen — minimal und genutzt', p1: 'storage — dein Stapel und deine Sprache leben nur in chrome.storage.local.', p2: 'tabs + activeTab + scripting — liest Seitentext nur für den Tab, auf den du geklickt hast: zuerst ein einfacher fetch, und nur wenn der scheitert die Lese-API der aktiven Seite von Chrome.', p3: 'Keine Host-Berechtigungen: Keine Seite erhält jemals dauerhaften Zugriff auf diese Erweiterung.', note: '<b>Ehrlicher Hinweis:</b> Der Seitentext wird im Moment des Klicks erfasst, nicht fortlaufend. Wenn sich eine Seite nicht lesen lässt, speichert ReadStack nur Titel und URL — nichts geht verloren.', install: 'Installation', i1: 'Lade readstack.zip herunter und entpacke es an einen dauerhaften Ort.', i2: 'Öffne chrome://extensions und aktiviere den Entwicklermodus.', i3: 'Klicke auf „Entpackte Erweiterung laden" und wähle den Ordner (behalte ihn).', i4: 'Öffne das Popup auf einer Seite, die du behalten willst, und klicke auf „Diesen Tab hinzufügen".', credit: 'Erstellt von Harley Vásquez' },
+  };
+  const KEY = 'rs:landingLang';
+  const SUPPORTED = ['en', 'es', 'fr', 'pt', 'it', 'de'];
+  async function current() {
+    let lang;
+    try { const s = await chrome.storage.local.get(KEY); lang = s[KEY]; } catch (e) { /* no extension context */ }
+    if (typeof lang !== 'string' || !SUPPORTED.includes(lang)) lang = localStorage.getItem(KEY);
+    if (typeof lang !== 'string' || !SUPPORTED.includes(lang)) {
+      lang = (navigator.language || 'en').toLowerCase().split('-')[0];
+      if (!SUPPORTED.includes(lang)) lang = 'en';
+    }
+    return lang;
+  }
+  async function apply() {
+    const lang = await current();
+    const d = I18N[lang] || I18N.en;
+    document.title = d.heroTitle + ' — ' + d.tagline;
+    for (const el of document.querySelectorAll('[data-i18n]')) {
+      const k = el.getAttribute('data-i18n');
+      if (k === 'note') { el.innerHTML = d[k]; continue; }
+      el.textContent = d[k] || I18N.en[k];
+    }
+    const sel = document.querySelector('[data-i18n-lang]');
+    if (sel) sel.value = lang;
+  }
+  document.querySelector('[data-i18n-lang]').addEventListener('change', async (e) => {
+    localStorage.setItem(KEY, e.target.value);
+    await apply();
+  });
+  apply();
+</script>
+</body>
+</html>

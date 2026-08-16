@@ -1,0 +1,16 @@
+{
+  "name": "readstack",
+  "version": "1.0.0",
+  "private": true,
+  "description": "ReadStack — stack what you read (MV3): save the current page (title, URL, readable text) into a private stack in chrome.storage, with read/unread tracking, search, archive and JSON export. Page text is read only on popup click; no host permissions.",
+  "type": "module",
+  "scripts": {
+    "probe": "node tests/probe.mjs",
+    "zip": "node tools/zip.mjs",
+    "gen-icons": "node tools/gen-icons.mjs"
+  },
+  "devDependencies": {
+    "archiver": "^7.0.1",
+    "puppeteer": "^25.7.0"
+  }
+}

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>ReadStack</title>
+<link rel="stylesheet" href="popup.css">
+</head>
+<body>
+<div class="app">
+  <header>
+    <div class="brand">
+      <span class="stacklogo" aria-hidden="true"></span>
+      <div class="brandtxt">
+        <span class="name" data-i18n="name">ReadStack</span>
+        <span class="tagline" data-i18n="tagline">stack what you read</span>
+        <span id="unreadCount" class="unreadcount"></span>
+      </div>
+    </div>
+    <select id="langSel" data-i18n-lang aria-label="Language">
+      <option value="en">EN</option>
+      <option value="es">ES</option>
+      <option value="fr">FR</option>
+      <option value="pt">PT</option>
+      <option value="it">IT</option>
+      <option value="de">DE</option>
+    </select>
+  </header>
+
+  <button id="addBtn" class="add" data-i18n="addNow">Add this tab</button>
+
+  <div class="filters">
+    <button class="filt active" data-f="all" data-i18n="all">All</button>
+    <button class="filt" data-f="unread" data-i18n="unread">Unread</button>
+    <button class="filt" data-f="archived" data-i18n="archived">Archived</button>
+    <input id="searchInput" type="search" data-i18n="searchPh" placeholder="Search…">
+  </div>
+
+  <div id="list" class="list"></div>
+
+  <div id="status" class="status"></div>
+
+  <footer>
+    <span id="capNote" class="capnote"></span>
+    <div class="row">
+      <button id="exportBtn" class="ghost" data-i18n="export">Export JSON</button>
+      <button id="purgeBtn" class="ghost danger" data-i18n="purgeArchived">Tidy archive</button>
+    </div>
+    <a class="credit" data-i18n="credit" href="https://www.linkedin.com/in/harleyvasquez/" target="_blank" rel="noreferrer">Built by Harley Vásquez</a>
+  </footer>
+</div>
+
+<script src="i18n.js"></script>
+<script src="popup.js"></script>
+</body>
+</html>

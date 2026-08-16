@@ -1,0 +1,20 @@
+{
+  "manifest_version": 3,
+  "name": "ReadStack",
+  "version": "1.0.0",
+  "description": "ReadStack — stack what you read: save the current page (title, URL and its readable text) into a personal stack in chrome.storage, with read/unread tracking, search, archive and JSON export. Page text is read only when you click the popup; no site ever gets host permissions.",
+  "permissions": ["storage", "tabs", "activeTab", "scripting"],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}
